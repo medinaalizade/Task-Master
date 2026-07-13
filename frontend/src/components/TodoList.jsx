@@ -33,15 +33,29 @@ function TodoList() {
   }, []);
 
   const fetchTodos = async () => {
-    try {
-      const response = await axios.get(API_URL);
+  try {
+    console.log('Fetching from:', API_URL); // DEBUG
+    const response = await axios.get(API_URL);
+    console.log('Response:', response.data); // DEBUG
+    console.log('Type:', typeof response.data); // DEBUG
+    console.log('Is Array?', Array.isArray(response.data)); // DEBUG
+    
+    // Make sure it's an array
+    if (Array.isArray(response.data)) {
       setTodos(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching todos:', error);
-      setLoading(false);
+    } else {
+      console.error('Expected array, got:', response.data);
+      setTodos([]); // Fallback to empty array
     }
-  };
+    
+    setLoading(false);
+  } catch (error) {
+    console.error('Error fetching todos:', error);
+    console.error('Error response:', error.response); // DEBUG
+    setTodos([]); // Fallback to empty array on error
+    setLoading(false);
+  }
+};
 
   const addTodo = (newTodo) => {
     setTodos([newTodo, ...todos]);
