@@ -3,7 +3,7 @@ import axios from 'axios';
 import TodoForm from './TodoForm';
 import TodoItem from './TodoItem';
 
-const API_URL = 'http://localhost:5000/api/todos';
+const API_URL = '/api/todos';
 
 function TodoList() {
   const [todos, setTodos] = useState([]);
